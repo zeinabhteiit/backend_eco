@@ -7,6 +7,7 @@ import productRoutes from './src/routes/productRoutes.js';
 import brandRoutes from "./src/routes/brandRoutes.js";
 import orderRoutes from "./src/routes/orderRoutes.js"; 
 
+
 dotenv.config();
 const app = express();
 
@@ -19,6 +20,7 @@ app.use("/api/auth", authRoutes);
 app.use('/api/products', productRoutes);
 app.use("/api/brands", brandRoutes); // Prefix for brand routes
 app.use("/api/orders", orderRoutes);
+
 
 // Server
 const PORT = process.env.PORT || 5000;
