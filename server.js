@@ -8,6 +8,8 @@ import brandRoutes from "./src/routes/brandRoutes.js";
 import orderRoutes from "./src/routes/orderRoutes.js"; 
 import reviewRoutes from "./src/routes/reviewRoutes.js";
 import orderShipmentRoutes from './src/routes/ordershipmentRoutes.js';
+import orderShipmentAddressRoutes from './src/routes/ordershipmentaddressRoutes.js';
+
 
 
 dotenv.config();
@@ -24,6 +26,8 @@ app.use("/api/brands", brandRoutes); // Prefix for brand routes
 app.use("/api/orders", orderRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/ordershipments", orderShipmentRoutes);
+app.use("/api/ordershipmentaddress", orderShipmentAddressRoutes);
+
 
 
 // Server
