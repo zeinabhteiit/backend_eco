@@ -6,6 +6,7 @@ import authRoutes from './src/routes/authRoutes.js';
 import productRoutes from './src/routes/productRoutes.js';
 import brandRoutes from "./src/routes/brandRoutes.js";
 import orderRoutes from "./src/routes/orderRoutes.js"; 
+import reviewRoutes from "./src/routes/reviewRoutes.js";
 
 
 dotenv.config();
@@ -20,6 +21,7 @@ app.use("/api/auth", authRoutes);
 app.use('/api/products', productRoutes);
 app.use("/api/brands", brandRoutes); // Prefix for brand routes
 app.use("/api/orders", orderRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 
 // Server
