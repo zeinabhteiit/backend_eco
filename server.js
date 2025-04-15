@@ -4,6 +4,7 @@ import cors from "cors";
 import userRoutes from './src/routes/userRoutes.js';
 import authRoutes from './src/routes/authRoutes.js';
 import productRoutes from './src/routes/productRoutes.js';
+import brandRoutes from "./src/routes/brandRoutes.js";
 
 
 dotenv.config();
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use('/api/products', productRoutes);
+app.use("/api/brands", brandRoutes); // Prefix for brand routes
 
 
 // Server
