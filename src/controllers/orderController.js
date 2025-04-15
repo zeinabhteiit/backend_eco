@@ -1,31 +1,26 @@
-import {
-    getAllOrders,
-    getOrderById,
-    createOrder,
-    updateOrder,
-    deleteOrder,
-  } from "../models/order.js";
-  
-  export const fetchOrders = async (req, res) => {
-    try {
-      const data = await getAllOrders();
+import Order from "../models/order.js";
+
+export const fetchOrders = (req, res) => {
+  Order.getAllOrders()
+    .then((data) => {
       res.status(200).json({
         data,
         message: "Orders fetched successfully",
         error: null,
       });
-    } catch (error) {
+    })
+    .catch((error) => {
       res.status(500).json({
         data: null,
         message: "Failed to fetch orders",
         error: error.message,
       });
-    }
-  };
-  
-  export const fetchOrderById = async (req, res) => {
-    try {
-      const data = await getOrderById(req.params.id);
+    });
+};
+
+export const fetchOrderById = (req, res) => {
+  Order.getOrderById(req.params.id)
+    .then((data) => {
       if (!data) {
         return res.status(404).json({
           data: null,
@@ -38,63 +33,67 @@ import {
         message: "Order fetched successfully",
         error: null,
       });
-    } catch (error) {
+    })
+    .catch((error) => {
       res.status(500).json({
         data: null,
         message: "Failed to fetch order",
         error: error.message,
       });
-    }
-  };
-  
-  export const createNewOrder = async (req, res) => {
-    try {
-      const data = await createOrder(req.body);
+    });
+};
+
+export const createNewOrder = (req, res) => {
+  Order.createOrder(req.body)
+    .then((data) => {
       res.status(201).json({
         data,
         message: "Order created successfully",
         error: null,
       });
-    } catch (error) {
+    })
+    .catch((error) => {
       res.status(500).json({
         data: null,
         message: "Failed to create order",
         error: error.message,
       });
-    }
-  };
-  
-  export const updateExistingOrder = async (req, res) => {
-    try {
-      const data = await updateOrder(req.params.id, req.body);
+    });
+};
+
+export const updateExistingOrder = (req, res) => {
+  Order.updateOrder(req.params.id, req.body)
+    .then((data) => {
       res.status(200).json({
         data,
         message: "Order updated successfully",
         error: null,
       });
-    } catch (error) {
+    })
+    .catch((error) => {
       res.status(500).json({
         data: null,
         message: "Failed to update order",
         error: error.message,
       });
-    }
-  };
-  
-  export const deleteExistingOrder = async (req, res) => {
-    try {
-      await deleteOrder(req.params.id);
+    });
+};
+
+export const deleteExistingOrder = (req, res) => {
+  Order.deleteOrder(req.params.id)
+    .then(() => {
       res.status(200).json({
         data: null,
         message: "Order deleted successfully",
         error: null,
       });
-    } catch (error) {
+    })
+    .catch((error) => {
       res.status(500).json({
         data: null,
         message: "Failed to delete order",
         error: error.message,
       });
-    }
-  };
-  
+    });
+};
+
