@@ -1,27 +1,27 @@
 import db from "../db.js";
 
-export const getAllOrders = () => {
+const getAllOrders = () => {
   return new Promise((resolve, reject) => {
-    db.query("SELECT * FROM Orders", (err, results) => {
+    db.execute("SELECT * FROM Orders", (err, results) => {
       if (err) return reject(err);
       resolve(results);
     });
   });
 };
 
-export const getOrderById = (id) => {
+const getOrderById = (id) => {
   return new Promise((resolve, reject) => {
-    db.query("SELECT * FROM Orders WHERE id = ?", [id], (err, results) => {
+    db.execute("SELECT * FROM Orders WHERE id = ?", [id], (err, results) => {
       if (err) return reject(err);
       resolve(results[0]);
     });
   });
 };
 
-export const createOrder = (orderData) => {
+const createOrder = (orderData) => {
   const { subtotal_amount, total_amount, order_date, status, user_id } = orderData;
   return new Promise((resolve, reject) => {
-    db.query(
+    db.execute(
       "INSERT INTO Orders (subtotal_amount, total_amount, order_date, status, user_id) VALUES (?, ?, ?, ?, ?)",
       [subtotal_amount, total_amount, order_date, status, user_id],
       (err, result) => {
@@ -32,10 +32,10 @@ export const createOrder = (orderData) => {
   });
 };
 
-export const updateOrder = (id, updatedData) => {
+const updateOrder = (id, updatedData) => {
   const { subtotal_amount, total_amount, order_date, status, user_id } = updatedData;
   return new Promise((resolve, reject) => {
-    db.query(
+    db.execute(
       "UPDATE Orders SET subtotal_amount = ?, total_amount = ?, order_date = ?, status = ?, user_id = ? WHERE id = ?",
       [subtotal_amount, total_amount, order_date, status, user_id, id],
       (err) => {
@@ -46,11 +46,19 @@ export const updateOrder = (id, updatedData) => {
   });
 };
 
-export const deleteOrder = (id) => {
+const deleteOrder = (id) => {
   return new Promise((resolve, reject) => {
-    db.query("DELETE FROM Orders WHERE id = ?", [id], (err) => {
+    db.execute("DELETE FROM Orders WHERE id = ?", [id], (err) => {
       if (err) return reject(err);
       resolve();
     });
   });
+};
+
+export default {
+  getAllOrders,
+  getOrderById,
+  createOrder,
+  updateOrder,
+  deleteOrder,
 };
