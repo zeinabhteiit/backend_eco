@@ -13,16 +13,16 @@ const Brand = {
     });
   },
 
-  create: (name, image, callback) => {
-    db.query("INSERT INTO Brands (name, image) VALUES (?, ?)", [name, image], (err, result) => {
+  create: (name, callback) => {
+    db.query("INSERT INTO Brands (name) VALUES (?)", [name], (err, result) => {
       if (err) return callback(err, null);
-      const newBrand = { id: result.insertId, name, image };
+      const newBrand = { id: result.insertId, name };
       callback(null, newBrand);
     });
   },
 
-  update: (id, name, image, callback) => {
-    db.query("UPDATE Brands SET name = ?, image = ? WHERE id = ?", [name, image, id], (err, result) => {
+  update: (id, name, callback) => {
+    db.query("UPDATE Brands SET name = ? WHERE id = ?", [name, id], (err, result) => {
       if (err) return callback(err, null);
       callback(null, result.affectedRows > 0);
     });

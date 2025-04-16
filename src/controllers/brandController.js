@@ -50,7 +50,7 @@ export const getBrandById = (req, res) => {
 
 // Add a new brand
 export const addBrand = (req, res) => {
-  const { name, image } = req.body;
+  const { name } = req.body;
 
   if (!name) {
     return res.status(400).json({
@@ -60,7 +60,7 @@ export const addBrand = (req, res) => {
     });
   }
 
-  Brand.create(name, image, (err, newBrand) => {
+  Brand.create(name, (err, newBrand) => {
     if (err) {
       return res.status(500).json({
         data: null,
@@ -80,9 +80,9 @@ export const addBrand = (req, res) => {
 // Update a brand
 export const updateBrand = (req, res) => {
   const brandId = parseInt(req.params.id, 10);
-  const { name, image } = req.body;
+  const { name } = req.body;
 
-  Brand.update(brandId, name, image, (err, success) => {
+  Brand.update(brandId, name, (err, success) => {
     if (err) {
       return res.status(500).json({
         data: null,
