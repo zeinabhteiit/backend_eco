@@ -1,19 +1,31 @@
-import db from "../db.js";  // Assuming you're using some DB connection
+import db from "../db.js";
+import bcrypt from "bcryptjs";
 
-// Find user by email
 export const findUserByEmail = (email, callback) => {
-    const query = "SELECT * FROM Users WHERE email = ?";
-    db.query(query, [email], callback);
+    db.execute("SELECT id, name, email, password, role FROM Users WHERE email = ?", [email], (err, results) => {
+        if (err) return callback(err, null);
+        callback(null, results.length > 0 ? results[0] : null);
+    });
 };
 
-// Create a new user
 export const createUser = (name, email, password, callback) => {
-    const query = "INSERT INTO Users (name, email, password, role) VALUES (?, ?, ?, 'user')";
-    db.query(query, [name, email, password], callback);
+    bcrypt.hash(password, 10, (err, hashedPassword) => {
+        if (err) return callback(err, null);
+
+        db.execute(
+            "INSERT INTO Users (name, email, password, role) VALUES (?, ?, ?, ?)",
+            [name, email, hashedPassword, "user"],
+            (err, result) => {
+                if (err) return callback(err, null);
+                callback(null, { id: result.insertId, name, email, role: "user" });
+            }
+        );
+    });
 };
 
-// Find user by ID
 export const findUserById = (id, callback) => {
-    const query = "SELECT * FROM Users WHERE id = ?";
-    db.query(query, [id], callback);
+    db.execute("SELECT id, name, email, role FROM Users WHERE id = ?", [id], (err, results) => {
+        if (err) return callback(err, null);
+        callback(null, results.length > 0 ? results[0] : null);
+    });
 };

@@ -1,28 +1,21 @@
-// routes/userRoutes.js
-import express from "express";
+import express from 'express';
 import {
-  getUsers,
-  getUser,
-  createUserHandler,
-  updateUserHandler,
-  deleteUserHandler,
-} from "../controllers/userController.js";
+    getUsers,
+    deleteUser,
+    updateUser,
+    addUser
+} from '../controllers/userController.js';
+import { verifyToken, checkRole } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// GET all users
-router.get("/", getUsers);
-
-// GET user by email
-router.get("/:email", getUser);
-
-// CREATE new user
-router.post("/", createUserHandler);
-
-// UPDATE user
-router.put("/:id", updateUserHandler);
-
-// DELETE user
-router.delete("/:id", deleteUserHandler);
+// Only super admins can access these admin-related routes
+router.get('/', verifyToken, checkRole(['super_admin']), getUsers);
+router.post('/', verifyToken, checkRole(['super_admin']), addUser);
+router.put('/:id', verifyToken, checkRole(['super_admin']), updateUser);
+router.delete('/:id', verifyToken, checkRole(['super_admin']), deleteUser);
 
 export default router;
+
+
+

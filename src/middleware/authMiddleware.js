@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 
-// Middleware to verify JWT token
 export const verifyToken = (req, res, next) => {
     const token = req.cookies?.token;
     if (!token) {
@@ -9,7 +8,7 @@ export const verifyToken = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;  // Attach the decoded user data to the request object
+        req.user = decoded;
         next();
     } catch (error) {
         return res.status(401).json({ error: 'Invalid token' });

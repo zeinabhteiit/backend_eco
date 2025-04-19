@@ -1,58 +1,74 @@
-// models/user.js
 import db from "../db.js";
 
-// Get all users
+// Fetch all users
 export const getAllUsers = (callback) => {
-  db.execute(
-    "SELECT id, name, email, role FROM Users", // Adjusted for CHAR(50) and no created_at
-    (err, result) => {
-      if (err) return callback(err);
-      callback(null, result);
-    }
-  );
+    db.execute("SELECT id, name, email, role FROM Users", (err, results) => {
+        if (err) return callback(err, null);
+        callback(null, results);
+    });
 };
 
-// Get user by email (for login)
-export const getUserByEmail = (email, callback) => {
-  db.execute(
-    "SELECT * FROM Users WHERE email = ?",
-    [email],
-    (err, result) => {
-      if (err || result.length === 0) return callback(err || "No user found");
-      callback(null, result[0]); // Return the first matching user
-    }
-  );
+// Create a new user
+export const createUser = (userData, callback) => {
+    const { name, email, password, role } = userData;
+    db.execute(
+        "INSERT INTO Users (name, email, password, role) VALUES (?, ?, ?, ?)",
+        [name, email, password, role],
+        (err, result) => {
+            if (err) return callback(err, null);
+            callback(null, result);
+        }
+    );
 };
 
-// Create new user
-export const createUser = (user, callback) => {
-  const { name, email, password, role } = user;
-  db.execute(
-    "INSERT INTO Users (name, email, password, role) VALUES (?, ?, ?, ?)",
-    [name, email, password, role],
-    (err, result) => {
-      if (err) return callback(err);
-      callback(null, { id: result.insertId, name, email, role });
-    }
-  );
+// Delete user by ID
+export const deleteUserById = (id, callback) => {
+    db.execute("DELETE FROM Users WHERE id = ?", [id], (err, result) => {
+        if (err) return callback(err, null);
+        callback(null, result);
+    });
 };
 
-// Update user
-export const updateUser = (id, name, role, callback) => {
-  db.execute(
-    "UPDATE Users SET name = ?, role = ? WHERE id = ?",
-    [name, role, id],
-    (err, result) => {
-      if (err) return callback(err);
-      callback(null, result);
-    }
-  );
+// Check if user has pending orders
+export const hasPendingOrders = (id, callback) => {
+    db.execute(
+        "SELECT COUNT(*) AS count FROM Orders WHERE user_id = ? AND status IN ('pending', 'shipped')",
+        [id],
+        (err, results) => {
+            if (err) return callback(err, null);
+            callback(null, results[0].count > 0);
+        }
+    );
 };
 
-// Delete user
-export const deleteUser = (id, callback) => {
-  db.execute("DELETE FROM Users WHERE id = ?", [id], (err, result) => {
-    if (err) return callback(err);
-    callback(null, result);
-  });
+// Check if user has posted reviews
+export const hasUserReviews = (id, callback) => {
+    db.execute("SELECT COUNT(*) AS count FROM Review WHERE user_id = ?", [id], (err, results) => {
+        if (err) return callback(err, null);
+        callback(null, results[0].count > 0);
+    });
 };
+
+// Update user details
+export const updateUserById = (id, updatedFields, callback) => {
+    const keys = Object.keys(updatedFields);
+    if (keys.length === 0) return callback(new Error("No fields to update"), null);
+
+    const setClause = keys.map(key => `${key} = ?`).join(", ");
+    const values = [...Object.values(updatedFields), id];
+
+    db.execute(`UPDATE Users SET ${setClause} WHERE id = ?`, values, (err, result) => {
+        if (err) return callback(err, null);
+        callback(null, result);
+    });
+};
+
+// Fetch a user by ID
+export const getUserById = (id, callback) => {
+    db.execute("SELECT id, name, email, role FROM Users WHERE id = ?", [id], (err, results) => {
+        if (err) return callback(err, null);
+        callback(null, results[0] || null);
+    });
+};
+
+

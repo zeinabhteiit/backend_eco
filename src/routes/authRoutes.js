@@ -1,15 +1,15 @@
-import express from "express";
-import { registerUser, loginUser, logoutUser, getMe } from "../controllers/authController.js";
-import { verifyToken, checkRole } from "../middleware/authMiddleware.js";
+import express from 'express';
+import { registerUser, loginUser, logoutUser,getMe } from "../controllers/authController.js"; 
+import { verifyToken } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// Public routes
+// Define routes
 router.post("/register", registerUser);
 router.post("/login", loginUser);
+router.post("/logout", logoutUser);
+router.get("/me", verifyToken, getMe);
 
-// Protected routes
-router.get("/me", verifyToken, getMe);  // User info after login
-router.post("/logout", verifyToken, logoutUser);
-
+// Export the router so it can be used in your main server file
 export default router;
+
