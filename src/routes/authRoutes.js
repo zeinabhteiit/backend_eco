@@ -1,15 +1,18 @@
 import express from 'express';
-import { registerUser, loginUser, logoutUser,getMe } from "../controllers/authController.js"; 
-import { verifyToken } from "../middleware/authMiddleware.js";
+import { register, login, getMe } from '../controllers/authController.js';
+import { verifyToken } from '../middleware/authMiddleware.js';
+
+import { forgotPassword, resetPassword } from '../controllers/authController.js';
 
 const router = express.Router();
 
-// Define routes
-router.post("/register", registerUser);
-router.post("/login", loginUser);
-router.post("/logout", logoutUser);
-router.get("/me", verifyToken, getMe);
+router.post('/register', register);
+router.post('/login', login);
+router.get('/me', verifyToken, getMe);
 
-// Export the router so it can be used in your main server file
+
+router.post('/forgot-password', forgotPassword);
+router.post('/reset-password/:token', resetPassword);
+
+
 export default router;
-

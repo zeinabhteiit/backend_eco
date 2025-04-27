@@ -32,7 +32,8 @@ export function getShipmentById(id) {
     const sql = `SELECT * FROM Shipments WHERE id = ?`;
     db.execute(sql, [id], (err, result) => {
       if (err) return reject(err);
-      resolve(result[0]);
+      // resolve(result[0]);
+      resolve(result.length > 0 ? result[0] : null); // Return null if not found
     });
   });
 }

@@ -44,6 +44,7 @@ export const fetchOrderById = (req, res) => {
 };
 
 export const createNewOrder = (req, res) => {
+  console.log("Order received:", req.body);
   Order.createOrder(req.body)
     .then((data) => {
       res.status(201).json({
@@ -53,6 +54,7 @@ export const createNewOrder = (req, res) => {
       });
     })
     .catch((error) => {
+      console.error("Order creation error:", error); 
       res.status(500).json({
         data: null,
         message: "Failed to create order",
@@ -96,4 +98,3 @@ export const deleteExistingOrder = (req, res) => {
       });
     });
 };
-

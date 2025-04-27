@@ -44,8 +44,13 @@ app.use("/api/ordershipmentaddress", orderShipmentAddressRoutes);
 //app.use("/users", authRoutes);  // Routes for authentication (register, login, etc.)
 //app.use("/admin", userRoutes); 
 
-app.use('/api/users', userRoutes);
+// app.use('/api/users', userRoutes);
+//app.use("/users", authRoutes);
+
+
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+
 
 // Server
 const PORT = process.env.PORT || 5000;
