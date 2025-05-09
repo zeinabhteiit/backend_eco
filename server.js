@@ -9,7 +9,7 @@ import orderRoutes from "./src/routes/orderRoutes.js";
 import reviewRoutes from "./src/routes/reviewRoutes.js";
 import orderShipmentRoutes from './src/routes/ordershipmentRoutes.js';
 
-import contactRoutes from "./src/routes/contactRoutes.js";
+//import contactRoutes from "./src/routes/contactRoutes.js";
 
 import orderShipmentAddressRoutes from './src/routes/ordershipmentaddressRoutes.js';
 import cookieParser from "cookie-parser";
@@ -20,7 +20,19 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 const app = express();
 
-app.use(cors());
+
+
+// Enable CORS for a specific origin (your frontend app)
+app.use(cors({
+  origin: 'http://localhost:5173',  // Replace with your frontend's URL
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,Authorization',  // Add headers if needed
+}));
+
+
+
+ //app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -37,15 +49,9 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/ordershipments", orderShipmentRoutes);
 
-app.use("/api/contact", contactRoutes);
+//app.use("/api/contact", contactRoutes);
 
 app.use("/api/ordershipmentaddress", orderShipmentAddressRoutes);
-
-//app.use("/users", authRoutes);  // Routes for authentication (register, login, etc.)
-//app.use("/admin", userRoutes); 
-
-// app.use('/api/users', userRoutes);
-//app.use("/users", authRoutes);
 
 
 app.use('/api/auth', authRoutes);
