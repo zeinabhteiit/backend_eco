@@ -23,12 +23,21 @@ const app = express();
 
 
 // Enable CORS for a specific origin (your frontend app)
-app.use(cors({
-  origin: 'http://localhost:5173',  // Replace with your frontend's URL
-  methods: 'GET,POST,PUT,DELETE',
-  allowedHeaders: 'Content-Type,Authorization',  // Add headers if needed
-}));
+// app.use(cors({
+//   origin: 'http://localhost:5173',  // Replace with your frontend's URL
 
+//   methods: 'GET,POST,PUT,DELETE',
+//   allowedHeaders: 'Content-Type,Authorization',  // Add headers if needed
+// }));
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://frontend-eco-zee10-akns6zqfi-zeinab-hoteits-projects.vercel.app'
+  ],
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,Authorization',
+  credentials: true
+}));
 
 
  //app.use(cors());
