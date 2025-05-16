@@ -4,7 +4,9 @@ const getAllOrders = () => {
   return new Promise((resolve, reject) => {
     db.execute("SELECT * FROM Orders", (err, results) => {
       if (err) return reject(err);
+       console.log("DEBUG Orders:", results); 
       resolve(results);
+
     });
   });
 };
