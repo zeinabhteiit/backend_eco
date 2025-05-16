@@ -29,17 +29,15 @@ const app = express();
 //   methods: 'GET,POST,PUT,DELETE',
 //   allowedHeaders: 'Content-Type,Authorization',  // Add headers if needed
 // }));
+
+
+const allowedOrigins = ['https://frontend-eco-zee21.vercel.app'];
+
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    //'https://frontend-eco-zee10-akns6zqfi-zeinab-hoteits-projects.vercel.app'
-    'https://frontend-eco-zee21.vercel.app/'
-  ],
-  methods: 'GET,POST,PUT,DELETE',
-  allowedHeaders: 'Content-Type,Authorization',
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
-
 
  //app.use(cors());
 
