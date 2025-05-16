@@ -32,7 +32,8 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://frontend-eco-zee10-akns6zqfi-zeinab-hoteits-projects.vercel.app'
+    //'https://frontend-eco-zee10-akns6zqfi-zeinab-hoteits-projects.vercel.app'
+    'https://frontend-eco-zee21.vercel.app/'
   ],
   methods: 'GET,POST,PUT,DELETE',
   allowedHeaders: 'Content-Type,Authorization',
