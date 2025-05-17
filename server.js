@@ -33,18 +33,21 @@ const app = express();
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://frontend-eco-zee21.vercel.app/' // <-- your actual deployed frontend domain
+  //'https://frontend-eco-zee21.vercel.app/' // <-- your actual deployed frontend domain
+  'https://frontend-eco-mu.vercel.app'
 ];
 
 const corsOptions = {
   origin: function (origin, callback) {
+    console.log("🌍 Incoming Origin:", origin);  // 👈 ADD THIS LINE
+
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.log("❌ CORS blocked:", origin);   // 👈 OPTIONAL
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
