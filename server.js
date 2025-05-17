@@ -28,8 +28,7 @@ const app = express();
 
 const allowedOrigins = [
   'http://localhost:5173',
-  //'https://frontend-eco-zee21.vercel.app/' // <-- your actual deployed frontend domain
-   'https://frontend-eco-zee20.vercel.app'
+   'https://frontend-eco-zee10.vercel.app'
 ];
 
 const corsOptions = {
