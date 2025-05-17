@@ -28,7 +28,8 @@ const app = express();
 
 const allowedOrigins = [
   'http://localhost:5173',
-   'https://frontend-eco-zee10.vercel.app'
+  //'https://frontend-eco-zee10.vercel.app'
+  'https://frontend-eco-theta.vercel.app'
 ];
 
 const corsOptions = {
