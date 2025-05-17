@@ -14,13 +14,8 @@ import orderShipmentRoutes from './src/routes/ordershipmentRoutes.js';
 import orderShipmentAddressRoutes from './src/routes/ordershipmentaddressRoutes.js';
 import cookieParser from "cookie-parser";
 
-
-
-
 dotenv.config();
 const app = express();
-
-
 
 // Enable CORS for a specific origin (your frontend app)
 // app.use(cors({
@@ -34,7 +29,6 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   //'https://frontend-eco-zee21.vercel.app/' // <-- your actual deployed frontend domain
-  'https://frontend-eco-mu.vercel.app'
 ];
 
 const corsOptions = {
@@ -44,7 +38,7 @@ const corsOptions = {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      console.log("❌ CORS blocked:", origin);   // 👈 OPTIONAL
+     // console.log("❌ CORS blocked:", origin);   // 👈 OPTIONAL
       callback(new Error('Not allowed by CORS'));
     }
   },
